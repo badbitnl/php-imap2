@@ -186,6 +186,18 @@ class Message
             return false;
         }
 
+        // MMWVDW fix for mapping based on UID instead of ID
+        if ( $isUid ) {
+
+            foreach ( $messages as $key => $value ) {
+
+                $messages[ $value->uid ] = $value;
+                unset( $messages[$key] );
+
+            }
+
+        }
+
         if ($section) {
             return $messages[$messageNum]->bodypart[$section];
         }
