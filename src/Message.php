@@ -165,6 +165,11 @@ class Message
 
         $messages = $client->fetch($imap->getMailboxName(), $messageNum, $isUid, ['BODY[TEXT]']);
 
+        // MMWVDW Fix for $messages array indexed by message ID instead of UID
+        if ( count($messages) == 1 ) {
+            return array_shift($messages)->bodypart['TEXT'];
+        }
+
         return $messages[$messageNum]->bodypart['TEXT'];
     }
 
